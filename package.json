@@ -1,0 +1,44 @@
+{
+  "name": "@qookie/nuxt",
+  "version": "0.1.0",
+  "description": "GDPR/NDPR cookie consent module for Nuxt 3",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "nuxt-module-build build",
+    "dev": "nuxt-module-build build --stub && nuxt-module-build prepare",
+    "dev:playground": "nuxi dev playground",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@nuxt/kit": "^3.13.0",
+    "@nuxt/module-builder": "^0.8.4",
+    "@nuxt/schema": "^3.13.0",
+    "@nuxt/test-utils": "^3.14.0",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "@vitest/coverage-v8": "^3.2.0",
+    "@vue/test-utils": "^2.4.0",
+    "jsdom": "^29.1.1",
+    "nuxt": "^3.13.0",
+    "typescript": "^5.6.0",
+    "vitest": "^3.2.0"
+  },
+  "peerDependencies": {
+    "nuxt": "^3.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "@parcel/watcher"]
+  }
+}
