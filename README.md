@@ -1,4 +1,4 @@
-# @qookie/nuxt
+# qookie-nuxt
 
 GDPR and NDPR cookie consent for Nuxt 3. Drop-in banner and preference modal, fully themeable, zero runtime dependencies.
 
@@ -10,29 +10,50 @@ GDPR and NDPR cookie consent for Nuxt 3. Drop-in banner and preference modal, fu
 
 ---
 
-## Installation
+## How it works — read this first
 
-```bash
-npm install @qookie/nuxt
-# or
-pnpm add @qookie/nuxt
-```
+Installing and configuring this module gives you:
 
-Register the module in your `nuxt.config.ts`:
+- A **consent banner** that appears on first visit
+- A **preferences modal** where users manage their choices per category
+- A **composable** (`useCookieConsent`) that exposes the current consent state
+
+**What the module does not do automatically:**
+
+- It does not block or gate any scripts, cookies, or network requests on its own
+- It does not load or prevent third-party tools from running
+
+**Gating is your responsibility.** The module surfaces consent state — you decide what to do with it. The typical pattern is:
 
 ```ts
-export default defineNuxtConfig({
-  modules: ['@qookie/nuxt'],
-})
+const { isEnabled } = useCookieConsent()
+
+if (isEnabled('analytics')) {
+  loadGoogleAnalytics() // your code — runs only if the user consented
+}
 ```
 
-That's it. The banner appears automatically on first visit.
+This is intentional. Cookie consent tools that intercept scripts automatically tend to break SSR, create race conditions, and are fragile. Explicit gating in your own code is more reliable and easier to debug.
 
 ---
 
-## Quick start
+## Installation
 
-Add `<QookieBanner />` to your root layout. It auto-hides on your privacy policy page.
+```bash
+npm install qookie-nuxt
+# or
+pnpm add qookie-nuxt
+```
+
+Register the module in `nuxt.config.ts`:
+
+```ts
+export default defineNuxtConfig({
+  modules: ['qookie-nuxt'],
+})
+```
+
+Add `<QookieBanner />` to your root layout:
 
 ```vue
 <!-- layouts/default.vue -->
@@ -44,18 +65,21 @@ Add `<QookieBanner />` to your root layout. It auto-hides on your privacy policy
 </template>
 ```
 
+The banner will appear on first visit. That's the minimum setup.
+
 ---
 
-## Configuration
+## Realistic end-to-end example
 
-All options are set under the `qookie` key in `nuxt.config.ts`. Everything has sensible defaults so you only need to set what you want to change.
+This is what a real integration looks like: install, configure categories, style it, and gate a third-party script.
+
+**1. Configure your categories in `nuxt.config.ts`**
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['@qookie/nuxt'],
+  modules: ['qookie-nuxt'],
 
   qookie: {
-    storageKey: 'qookie:consent',
     privacyPolicyPath: '/privacy-policy',
     categories: [
       {
@@ -67,7 +91,7 @@ export default defineNuxtConfig({
       {
         key: 'analytics',
         label: 'Analytics',
-        description: 'Help us understand how visitors interact with the site.',
+        description: 'Help us understand how visitors use the site.',
       },
       {
         key: 'marketing',
@@ -75,16 +99,68 @@ export default defineNuxtConfig({
         description: 'Used to deliver relevant advertisements.',
       },
     ],
-    declaredCookies: [
-      { name: '_ga', category: 'analytics', description: 'Google Analytics' },
-      { name: '_gid', category: 'analytics', description: 'Google Analytics session' },
-    ],
-    auditEndpoint: 'https://your-api.com/consent-audit',
-    loadPoppins: true,
-    fontFamily: "'Poppins', sans-serif",
   },
 })
 ```
+
+**2. Add the banner to your layout**
+
+```vue
+<!-- layouts/default.vue -->
+<template>
+  <div>
+    <slot />
+    <QookieBanner />
+  </div>
+</template>
+```
+
+**3. Style it to match your brand**
+
+Add these CSS variables to your global stylesheet. Only set the ones you want to change — all have defaults.
+
+```css
+/* assets/main.css */
+:root {
+  --qookie-accent: #your-brand-color;
+  --qookie-bg: #ffffff;
+  --qookie-radius: 8px;
+}
+```
+
+Make sure this file is loaded globally. In `nuxt.config.ts`:
+
+```ts
+export default defineNuxtConfig({
+  css: ['~/assets/main.css'],
+  // ...
+})
+```
+
+**4. Gate a third-party script behind consent**
+
+```vue
+<!-- app.vue or a layout -->
+<script setup lang="ts">
+const { decided, isEnabled } = useCookieConsent()
+
+watch(decided, (hasDecided) => {
+  if (hasDecided && isEnabled('analytics')) {
+    useHead({
+      script: [{ src: 'https://www.googletagmanager.com/gtag/js', async: true }],
+    })
+  }
+}, { immediate: true })
+</script>
+```
+
+The `watch` with `{ immediate: true }` means it also runs on page load for returning users who have already decided. `decided` becomes `true` once the user has made any choice — either from this session or from localStorage on a previous visit.
+
+---
+
+## Configuration
+
+All options go under the `qookie` key in `nuxt.config.ts`. Everything has defaults so you only set what you need.
 
 ### Options reference
 
@@ -100,7 +176,7 @@ export default defineNuxtConfig({
 
 ### Default categories
 
-If you don't set `categories`, these four are used:
+When `categories` is not set, these four are used:
 
 | Key | Label | Required |
 |---|---|---|
@@ -113,9 +189,10 @@ If you don't set `categories`, these four are used:
 
 ## Theming
 
-The UI is driven entirely by CSS custom properties on `:root`. Override any of them in your global stylesheet to match your brand.
+The UI is driven entirely by CSS custom properties. Set them in your global stylesheet — there is no theme config object or prop system.
 
 ```css
+/* assets/main.css */
 :root {
   --qookie-font: 'Inter', sans-serif;   /* font family */
   --qookie-accent: #0f766e;             /* buttons, toggles, links */
@@ -128,9 +205,18 @@ The UI is driven entirely by CSS custom properties on `:root`. Override any of t
 }
 ```
 
+If you don't have a global CSS file yet, create `assets/main.css` and register it:
+
+```ts
+// nuxt.config.ts
+export default defineNuxtConfig({
+  css: ['~/assets/main.css'],
+})
+```
+
 ### Using a different font
 
-To turn off the automatic Poppins injection and use your own font:
+Turn off the automatic Poppins injection and provide your own font-family:
 
 ```ts
 qookie: {
@@ -139,50 +225,57 @@ qookie: {
 }
 ```
 
-Then load the font yourself however you prefer (local, Google Fonts, etc.).
+Then load the font yourself — via `nuxt.config.ts` head links, a CSS `@import`, or however your project manages fonts.
 
 ---
 
 ## Composable API
 
-`useCookieConsent()` is auto-imported everywhere in your Nuxt app. You can use it to build your own UI, gate features behind consent, or read the current state.
+`useCookieConsent()` is auto-imported everywhere in your Nuxt app. This is how you read consent state and trigger actions from your own code.
 
 ```ts
 const {
-  // State (Ref)
-  decided,      // boolean — true once the user has made any choice
-  preferences,  // { [categoryKey]: boolean }
-  record,       // ConsentRecord | null — the proof-of-consent object
-  showBanner,   // boolean
-  showModal,    // boolean
-  categories,   // CategoryConfig[] from your nuxt.config
+  // State — all are Ref<T>, use .value outside templates
+  decided,      // Ref<boolean> — true once the user has made any choice
+  preferences,  // Ref<{ [categoryKey]: boolean }>
+  record,       // Ref<ConsentRecord | null> — the proof-of-consent object
+  showBanner,   // Ref<boolean>
+  showModal,    // Ref<boolean>
+  categories,   // CategoryConfig[] from your nuxt.config (not a Ref)
 
   // Actions
-  acceptAll,    // accept every category
-  rejectAll,    // reject all optional categories
-  saveConsent,  // save a specific preferences object
-  openModal,
-  closeModal,
-  isEnabled,    // (key: string) => boolean — check a single category
-  hydrate,      // called automatically by the plugin — rarely needed directly
+  acceptAll,          // () => void — accept every category
+  rejectAll,          // () => void — reject all optional categories
+  saveConsent,        // (prefs: ConsentPreferences) => void — save specific prefs
+  openModal,          // () => void
+  closeModal,         // () => void
+  isEnabled,          // (key: string) => boolean — check a single category
 } = useCookieConsent()
 ```
 
-### Gating a feature behind consent
+### Check if a category is enabled
+
+```ts
+const { isEnabled } = useCookieConsent()
+
+isEnabled('analytics')  // true or false
+```
+
+### Gate a UI element
 
 ```vue
+<template>
+  <div v-if="isEnabled('analytics')">
+    <!-- only rendered if the user consented to analytics -->
+  </div>
+</template>
+
 <script setup lang="ts">
 const { isEnabled } = useCookieConsent()
 </script>
-
-<template>
-  <div v-if="isEnabled('analytics')">
-    <!-- analytics widget -->
-  </div>
-</template>
 ```
 
-### Loading a third-party script only after consent
+### Gate a script for returning users and new decisions
 
 ```ts
 const { decided, isEnabled } = useCookieConsent()
@@ -194,16 +287,28 @@ watch(decided, (hasDecided) => {
 }, { immediate: true })
 ```
 
+### Open the preferences modal from anywhere
+
+```vue
+<button @click="openModal">Manage cookie preferences</button>
+
+<script setup lang="ts">
+const { openModal } = useCookieConsent()
+</script>
+```
+
+This is useful for a "Cookie settings" link in your footer.
+
 ### Custom banner / headless usage
 
-You can skip `<QookieBanner />` entirely and build your own UI from the composable:
+Skip `<QookieBanner />` entirely and drive everything from the composable:
 
 ```vue
 <template>
   <div v-if="showBanner" class="my-banner">
-    <p>We use cookies.</p>
-    <button @click="rejectAll">Reject</button>
-    <button @click="acceptAll">Accept</button>
+    <p>We use cookies to improve your experience.</p>
+    <button @click="rejectAll">Reject all</button>
+    <button @click="acceptAll">Accept all</button>
   </div>
 </template>
 
@@ -216,13 +321,13 @@ const { showBanner, acceptAll, rejectAll } = useCookieConsent()
 
 ## Proof of consent
 
-Every time a user makes a decision, a `ConsentRecord` is created and stored alongside their preferences.
+Every decision creates a `ConsentRecord` stored alongside preferences in localStorage.
 
 ```ts
 interface ConsentRecord {
-  id: string           // UUID — unique per decision
-  timestamp: string    // ISO 8601
-  configHash: string   // hash of your category config at the time of consent
+  id: string            // UUID — unique per decision
+  timestamp: string     // ISO 8601
+  configHash: string    // hash of your category config at time of consent
   bannerVersion: string
   preferences: { [categoryKey]: boolean }
 }
@@ -234,11 +339,11 @@ Access it at runtime:
 const { record } = useCookieConsent()
 console.log(record.value)
 // {
-//   id: "3f2a1b...",
+//   id: "3f2a1b4c-...",
 //   timestamp: "2025-01-15T10:23:00.000Z",
 //   configHash: "1a2b3c4d",
 //   bannerVersion: "0.1.0",
-//   preferences: { necessary: true, analytics: false }
+//   preferences: { necessary: true, analytics: false, marketing: false }
 // }
 ```
 
@@ -252,32 +357,32 @@ qookie: {
 }
 ```
 
-The full `ConsentRecord` is sent as the request body. Store these records if you need a server-side audit trail.
+The full `ConsentRecord` is the request body. Use this if you need server-side audit trails for compliance.
 
 ---
 
 ## Cookie scanner
 
-When you provide `declaredCookies`, the module polls `document.cookie` every 3 seconds and warns you about any cookies present that aren't in your list.
+When you provide `declaredCookies`, the module polls `document.cookie` every 3 seconds and warns about any cookies present that are not in your list. This is a development and audit tool — it helps you discover cookies you haven't accounted for.
 
 ```ts
 qookie: {
   declaredCookies: [
-    { name: '_ga',      category: 'analytics',  description: 'Google Analytics' },
-    { name: '_gid',     category: 'analytics',  description: 'Google Analytics session' },
-    { name: 'session',  category: 'necessary',  description: 'Session identifier' },
+    { name: '_ga',     category: 'analytics', description: 'Google Analytics' },
+    { name: '_gid',    category: 'analytics', description: 'Google Analytics session' },
+    { name: 'session', category: 'necessary', description: 'Session identifier' },
   ],
 }
 ```
 
-In development, undeclared cookies are logged to the console:
+In development, undeclared cookies are logged to the browser console:
 
 ```
 [Qookie] Undeclared cookies detected: ['auth_token']
 [Qookie] Add these to the declaredCookies option in nuxt.config.ts
 ```
 
-In all environments a `qookie:undeclared` custom event is dispatched on `window`, so you can handle it however you like:
+In all environments a `qookie:undeclared` custom event fires on `window`:
 
 ```ts
 window.addEventListener('qookie:undeclared', (e) => {
@@ -285,23 +390,23 @@ window.addEventListener('qookie:undeclared', (e) => {
 })
 ```
 
-> **Note:** `HttpOnly` cookies are intentionally invisible to JavaScript and will not appear in the scanner. This is correct — those cookies are set by your server and do not require client-side consent management.
+> **Note:** `HttpOnly` cookies are invisible to JavaScript by design and will not appear in the scanner. This is correct — they are managed server-side and are outside the scope of client-side consent.
 
 ---
 
 ## Stale consent detection
 
-When you add, remove, or rename a cookie category after users have already given consent, Qookie automatically detects this and re-shows the banner so users can update their preferences.
+If you add, remove, or rename a category after users have already consented, Qookie detects this on their next visit and re-shows the banner automatically.
 
-This is handled via the `configHash` in the consent record — a deterministic hash of your category keys and `required` flags. If it doesn't match the current config on load, the stored consent is discarded.
+Detection is based on a hash of your category keys and `required` flags stored in the consent record. If the hash doesn't match your current config, the old consent is discarded and the user is prompted again.
 
-No action is needed from you — it works automatically.
+No action needed — it works automatically.
 
 ---
 
 ## Privacy policy page
 
-The banner is automatically hidden when the user is on your `privacyPolicyPath` (default: `/privacy-policy`). Change the path to match your app:
+The banner hides itself when the user is on the `privacyPolicyPath` route (default: `/privacy-policy`):
 
 ```ts
 qookie: {
@@ -313,7 +418,7 @@ qookie: {
 
 ## Migrating from a previous version
 
-If your app previously stored consent under a different localStorage key (e.g. `cookieConsent` from an older integration), Qookie will detect this on first load, migrate the data to the new key format, and remove the old key. No configuration needed.
+If your app previously stored consent under a different localStorage key (e.g. `cookieConsent`), Qookie detects this on first load, migrates the data to the new format, and removes the old key. No configuration needed.
 
 ---
 
@@ -328,24 +433,24 @@ import type {
   DeclaredCookie,
   ConsentPreferences,
   ConsentRecord,
-} from '@qookie/nuxt'
+} from 'qookie-nuxt'
 ```
 
-The `qookie` key in `nuxt.config.ts` is fully typed — your IDE will autocomplete all options.
+The `qookie` key in `nuxt.config.ts` is fully typed — your IDE will autocomplete all options and flag unknown keys.
 
 ---
 
 ## Components
 
-Both components are auto-imported — no manual import needed.
+Both components are auto-imported — no manual import needed anywhere.
 
 ### `<QookieBanner />`
 
-The bottom bar that appears on first visit. Contains Reject all, Manage, and Accept all buttons. Opens `<QookieModal />` when Manage is clicked. Hidden on the privacy policy page.
+Fixed bottom bar. Shows on first visit, hides after any decision, hides on the privacy policy page. Contains Reject all, Manage, and Accept all buttons. Clicking Manage opens `<QookieModal />`.
 
 ### `<QookieModal />`
 
-Per-category toggle modal. Required categories are shown as locked. Has Reject all and Save preferences actions. Teleports to `<body>` to avoid z-index issues.
+Per-category toggle modal. Required categories are shown as disabled (locked on). Has Reject all and Save preferences actions. Teleports to `<body>` to avoid z-index conflicts with your own layout.
 
 ---
 

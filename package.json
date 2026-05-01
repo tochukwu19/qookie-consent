@@ -1,5 +1,5 @@
 {
-  "name": "@qookie/nuxt",
+  "name": "qookie-nuxt",
   "version": "0.1.0",
   "description": "GDPR/NDPR cookie consent module for Nuxt 3",
   "type": "module",

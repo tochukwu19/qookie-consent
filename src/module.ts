@@ -8,7 +8,7 @@ const GOOGLE_FONTS_URL =
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: '@qookie/nuxt',
+    name: 'qookie-nuxt',
     configKey: 'qookie',
     compatibility: { nuxt: '^3.0.0' },
   },
