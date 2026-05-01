@@ -4,12 +4,8 @@
   "description": "GDPR/NDPR cookie consent module for Nuxt 3",
   "type": "module",
   "exports": {
-    ".": {
-      "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
-    }
+    ".": "./dist/module.mjs"
   },
-  "main": "./dist/module.cjs",
   "files": [
     "dist"
   ],
@@ -44,5 +40,6 @@
       "esbuild",
       "@parcel/watcher"
     ]
-  }
+  },
+  "dependencies": {}
 }

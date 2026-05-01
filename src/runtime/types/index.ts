@@ -51,6 +51,9 @@ export interface ModuleOptions {
 export type RuntimeModuleOptions = Required<Omit<ModuleOptions, 'fontFamily' | 'loadPoppins'>>
 
 declare module 'nuxt/schema' {
+  interface NuxtConfig {
+    qookie?: ModuleOptions
+  }
   interface PublicRuntimeConfig {
     qookie: RuntimeModuleOptions
   }

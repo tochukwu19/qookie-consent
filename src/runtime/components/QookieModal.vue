@@ -29,7 +29,7 @@
               class="qookie-modal__toggle"
               :class="{ 'qookie-modal__toggle--on': draft[cat.key] }"
               :disabled="cat.required"
-              :aria-pressed="String(draft[cat.key])"
+              :aria-pressed="!!draft[cat.key]"
               :aria-label="`${cat.label} cookies ${draft[cat.key] ? 'enabled' : 'disabled'}`"
               @click="toggle(cat.key)"
             >
