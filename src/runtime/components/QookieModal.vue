@@ -31,7 +31,7 @@
               :disabled="cat.required"
               :aria-pressed="String(draft[cat.key])"
               :aria-label="`${cat.label} cookies ${draft[cat.key] ? 'enabled' : 'disabled'}`"
-              @click="!cat.required && toggle(cat.key)"
+              @click="toggle(cat.key)"
             >
               <span class="qookie-modal__thumb" />
             </button>
@@ -65,6 +65,8 @@ const draft = ref<ConsentPreferences>({ ...preferences.value })
 watch(preferences, val => { draft.value = { ...val } }, { immediate: true })
 
 function toggle(key: string) {
+  const cat = categories.find(c => c.key === key)
+  if (cat?.required) return
   draft.value = { ...draft.value, [key]: !draft.value[key] }
 }
 
