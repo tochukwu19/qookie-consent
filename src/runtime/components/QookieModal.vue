@@ -100,7 +100,7 @@ function handleRejectAll() {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  font-family: var(--qookie-font, inherit);
+  font-family: var(--qookie-font, 'Poppins', sans-serif);
 }
 
 .qookie-modal__header {

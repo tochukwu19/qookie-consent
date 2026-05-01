@@ -55,7 +55,7 @@ const isPrivacyPage = computed(() => route.path === privacyPolicyPath)
   background: var(--qookie-bg, #ffffff);
   border-top: 1px solid var(--qookie-border, #e5e7eb);
   box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.06);
-  font-family: var(--qookie-font, inherit);
+  font-family: var(--qookie-font, 'Poppins', sans-serif);
 }
 
 .qookie-banner__inner {
