@@ -1,11 +1,16 @@
 {
-  "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
     "types": ["node"],
-    "noEmit": true
+    "noEmit": true,
+    "jsx": "preserve",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true
   },
   "include": [
-    ".nuxt/nuxt.d.ts",
     "src/**/*.ts",
     "src/**/*.vue",
     "tests/**/*.ts",
