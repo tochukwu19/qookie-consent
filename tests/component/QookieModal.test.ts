@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import { mockState, mockActions, defaultCategories } from '../setup'
+import { mockState, mockActions, mockQookieConfig, defaultCategories } from '../setup'
 import QookieModal from '../../src/runtime/components/QookieModal.vue'
 
 const mountModal = () =>
@@ -17,6 +17,7 @@ beforeEach(() => {
     functional: false,
     marketing: false,
   }
+  mockQookieConfig.labels = {}
   vi.clearAllMocks()
 })
 
@@ -92,5 +93,45 @@ describe('QookieModal', () => {
     mountModal().findAll('.qookie-modal__toggle').forEach(t => {
       expect(t.attributes('aria-label')).toBeTruthy()
     })
+  })
+})
+
+describe('QookieModal — default labels', () => {
+  it('renders the default modal title', () => {
+    expect(mountModal().find('.qookie-modal__title').text()).toBe('Cookie Preferences')
+  })
+
+  it('renders the default Save preferences label', () => {
+    expect(mountModal().find('.qookie-modal__btn--solid').text()).toBe('Save preferences')
+  })
+
+  it('renders the default Reject all label', () => {
+    expect(mountModal().find('.qookie-modal__btn--ghost').text()).toBe('Reject all')
+  })
+
+  it('close button has the default aria-label', () => {
+    expect(mountModal().find('.qookie-modal__close').attributes('aria-label')).toBe('Close')
+  })
+})
+
+describe('QookieModal — custom labels', () => {
+  it('renders a custom modal title', () => {
+    mockQookieConfig.labels = { modal: { title: 'Préférences de cookies' } }
+    expect(mountModal().find('.qookie-modal__title').text()).toBe('Préférences de cookies')
+  })
+
+  it('renders a custom Save preferences label', () => {
+    mockQookieConfig.labels = { modal: { savePreferences: 'Sauvegarder' } }
+    expect(mountModal().find('.qookie-modal__btn--solid').text()).toBe('Sauvegarder')
+  })
+
+  it('renders a custom Reject all label', () => {
+    mockQookieConfig.labels = { modal: { rejectAll: 'Tout refuser' } }
+    expect(mountModal().find('.qookie-modal__btn--ghost').text()).toBe('Tout refuser')
+  })
+
+  it('renders a custom close aria-label', () => {
+    mockQookieConfig.labels = { modal: { close: 'Fermer' } }
+    expect(mountModal().find('.qookie-modal__close').attributes('aria-label')).toBe('Fermer')
   })
 })

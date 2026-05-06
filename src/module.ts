@@ -1,4 +1,5 @@
 import { defineNuxtModule, addPlugin, addComponent, addImports, createResolver } from '@nuxt/kit'
+import pkg from '../package.json'
 import type { ModuleOptions, RuntimeModuleOptions } from './runtime/types'
 
 export type { ModuleOptions } from './runtime/types'
@@ -69,7 +70,11 @@ export default defineNuxtModule<ModuleOptions>({
 
     // --- Runtime config (font options excluded — they're already applied above) ---
     const { fontFamily: _f, loadPoppins: _l, ...runtimeOptions } = options
-    nuxt.options.runtimeConfig.public.qookie = runtimeOptions as RuntimeModuleOptions
+    nuxt.options.runtimeConfig.public.qookie = {
+      ...runtimeOptions,
+      labels: runtimeOptions.labels ?? {},
+      moduleVersion: pkg.version,
+    } as RuntimeModuleOptions
 
     // --- Plugin, components, composable ---
     addPlugin({

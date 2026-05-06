@@ -1,6 +1,6 @@
 {
   "name": "qookie-nuxt",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "GDPR/NDPR cookie consent module for Nuxt 3",
   "type": "module",
   "exports": {

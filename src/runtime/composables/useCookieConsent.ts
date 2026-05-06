@@ -4,13 +4,12 @@ import { readConsent, writeConsent } from '../utils/storage'
 import { buildConsentRecord, isConsentStale } from '../utils/record'
 import { migrateLegacyConsent } from '../utils/migrate'
 
-const BANNER_VERSION = '0.1.0'
-
 export function useCookieConsent() {
   const config = useRuntimeConfig().public.qookie
   const categories = config.categories as CategoryConfig[]
   const storageKey = config.storageKey as string
   const auditEndpoint = config.auditEndpoint as string | undefined
+  const moduleVersion = config.moduleVersion as string
 
   const decided = useState<boolean>('qookie:decided', () => false)
   const preferences = useState<ConsentPreferences>(
@@ -26,7 +25,7 @@ export function useCookieConsent() {
     if (legacy) {
       decided.value = legacy.decided
       preferences.value = legacy.preferences
-      const r = buildConsentRecord(legacy.preferences, categories, BANNER_VERSION)
+      const r = buildConsentRecord(legacy.preferences, categories, moduleVersion)
       record.value = r
       writeConsent(storageKey, { decided: legacy.decided, preferences: legacy.preferences, record: r })
       showBanner.value = !legacy.decided
@@ -60,7 +59,7 @@ export function useCookieConsent() {
   }
 
   function saveConsent(prefs: ConsentPreferences) {
-    const r = buildConsentRecord(prefs, categories, BANNER_VERSION)
+    const r = buildConsentRecord(prefs, categories, moduleVersion)
 
     decided.value = true
     preferences.value = prefs

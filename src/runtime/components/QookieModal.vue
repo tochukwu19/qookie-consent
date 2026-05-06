@@ -8,8 +8,8 @@
         aria-label="Cookie preferences"
       >
         <div class="qookie-modal__header">
-          <h2 class="qookie-modal__title">Cookie Preferences</h2>
-          <button class="qookie-modal__close" aria-label="Close" @click="$emit('close')">
+          <h2 class="qookie-modal__title">{{ modalLabels.title ?? 'Cookie Preferences' }}</h2>
+          <button class="qookie-modal__close" :aria-label="modalLabels.close ?? 'Close'" @click="$emit('close')">
             ✕
           </button>
         </div>
@@ -40,10 +40,10 @@
 
         <div class="qookie-modal__footer">
           <button class="qookie-modal__btn qookie-modal__btn--ghost" @click="handleRejectAll">
-            Reject all
+            {{ modalLabels.rejectAll ?? 'Reject all' }}
           </button>
           <button class="qookie-modal__btn qookie-modal__btn--solid" @click="handleSave">
-            Save preferences
+            {{ modalLabels.savePreferences ?? 'Save preferences' }}
           </button>
         </div>
       </div>
@@ -53,12 +53,15 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import { useRuntimeConfig } from '#app'
 import { useCookieConsent } from '../composables/useCookieConsent'
-import type { ConsentPreferences } from '../types'
+import type { ConsentPreferences, QookieLabels } from '../types'
 
 defineEmits<{ close: [] }>()
 
 const { preferences, categories, saveConsent, rejectAll } = useCookieConsent()
+const config = useRuntimeConfig().public.qookie
+const modalLabels = ((config.labels as QookieLabels)?.modal) ?? {}
 
 const draft = ref<ConsentPreferences>({ ...preferences.value })
 

@@ -31,12 +31,29 @@ export interface StoredConsent {
   record: ConsentRecord
 }
 
+export interface QookieLabels {
+  banner?: {
+    message?: string
+    learnMore?: string
+    acceptAll?: string
+    rejectAll?: string
+    manage?: string
+  }
+  modal?: {
+    title?: string
+    close?: string
+    savePreferences?: string
+    rejectAll?: string
+  }
+}
+
 export interface ModuleOptions {
   storageKey?: string
   categories?: CategoryConfig[]
   privacyPolicyPath?: string
   auditEndpoint?: string
   declaredCookies?: DeclaredCookie[]
+  labels?: QookieLabels
   /** CSS font-family value applied via --qookie-font. Defaults to 'Poppins', sans-serif. */
   fontFamily?: string
   /**
@@ -47,8 +64,15 @@ export interface ModuleOptions {
   loadPoppins?: boolean
 }
 
-/** Options exposed to runtime code — font settings are build-time only. */
-export type RuntimeModuleOptions = Required<Omit<ModuleOptions, 'fontFamily' | 'loadPoppins'>>
+export interface RuntimeModuleOptions {
+  storageKey: string
+  categories: CategoryConfig[]
+  privacyPolicyPath: string
+  auditEndpoint: string | undefined
+  declaredCookies: DeclaredCookie[]
+  labels: QookieLabels
+  moduleVersion: string
+}
 
 declare module 'nuxt/schema' {
   interface NuxtConfig {

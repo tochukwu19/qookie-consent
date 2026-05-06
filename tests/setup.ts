@@ -1,6 +1,6 @@
 import { vi } from 'vitest'
 import { ref } from 'vue'
-import type { CategoryConfig } from '../src/runtime/types'
+import type { CategoryConfig, QookieLabels } from '../src/runtime/types'
 
 export const defaultCategories: CategoryConfig[] = [
   { key: 'necessary', label: 'Necessary', description: 'Required cookies', required: true },
@@ -40,18 +40,20 @@ vi.mock('../src/runtime/composables/useCookieConsent', () => ({
   }),
 }))
 
+// Mutable — tests can set fields (e.g. labels) before mounting a component.
+// Reset to defaults in beforeEach where needed.
+export const mockQookieConfig = {
+  storageKey: 'qookie:consent',
+  privacyPolicyPath: '/privacy-policy',
+  categories: defaultCategories,
+  declaredCookies: [] as never[],
+  auditEndpoint: undefined as string | undefined,
+  moduleVersion: '0.1.1',
+  labels: {} as QookieLabels,
+}
+
 vi.mock('#app', () => ({
-  useRuntimeConfig: () => ({
-    public: {
-      qookie: {
-        storageKey: 'qookie:consent',
-        privacyPolicyPath: '/privacy-policy',
-        categories: defaultCategories,
-        declaredCookies: [],
-        auditEndpoint: undefined,
-      },
-    },
-  }),
+  useRuntimeConfig: () => ({ public: { qookie: mockQookieConfig } }),
   useRoute: () => ({ path: '/' }),
   useState: vi.fn(),
   defineNuxtPlugin: (fn: () => unknown) => fn,

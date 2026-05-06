@@ -9,20 +9,24 @@
     >
       <div class="qookie-banner__inner">
         <p class="qookie-banner__text">
-          We use cookies to improve your experience.
-          <a :href="privacyPolicyPath" class="qookie-banner__link">Learn more</a>
+          <slot name="message">
+            {{ bannerLabels.message ?? 'We use cookies to improve your experience.' }}
+            <a :href="privacyPolicyPath" class="qookie-banner__link">
+              {{ bannerLabels.learnMore ?? 'Learn more' }}
+            </a>
+          </slot>
         </p>
 
         <div class="qookie-banner__actions">
           <!-- Reject and Accept are identical in size — compliance requirement -->
           <button class="qookie-banner__btn qookie-banner__btn--ghost" @click="rejectAll">
-            Reject all
+            {{ bannerLabels.rejectAll ?? 'Reject all' }}
           </button>
           <button class="qookie-banner__btn qookie-banner__btn--ghost" @click="openModal">
-            Manage
+            {{ bannerLabels.manage ?? 'Manage' }}
           </button>
           <button class="qookie-banner__btn qookie-banner__btn--solid" @click="acceptAll">
-            Accept all
+            {{ bannerLabels.acceptAll ?? 'Accept all' }}
           </button>
         </div>
       </div>
@@ -36,10 +40,12 @@
 import { computed } from 'vue'
 import { useRoute, useRuntimeConfig } from '#app'
 import { useCookieConsent } from '../composables/useCookieConsent'
+import type { QookieLabels } from '../types'
 
 const { showBanner, showModal, acceptAll, rejectAll, openModal, closeModal } = useCookieConsent()
 const config = useRuntimeConfig().public.qookie
 const privacyPolicyPath = config.privacyPolicyPath as string
+const bannerLabels = ((config.labels as QookieLabels)?.banner) ?? {}
 
 const route = useRoute()
 const isPrivacyPage = computed(() => route.path === privacyPolicyPath)

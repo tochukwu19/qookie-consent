@@ -171,6 +171,7 @@ All options go under the `qookie` key in `nuxt.config.ts`. Everything has defaul
 | `categories` | `CategoryConfig[]` | 4 defaults (see below) | Cookie categories shown in the modal |
 | `declaredCookies` | `DeclaredCookie[]` | `[]` | Known cookies on your site — enables the scanner |
 | `auditEndpoint` | `string` | `undefined` | POST endpoint that receives the consent record after every decision |
+| `labels` | `QookieLabels` | `{}` | Override any UI string — see [Language / i18n](#language--i18n) |
 | `loadPoppins` | `boolean` | `true` | Auto-inject Poppins from Google Fonts |
 | `fontFamily` | `string` | `"'Poppins', sans-serif"` | CSS font-family applied via `--qookie-font` |
 
@@ -226,6 +227,46 @@ qookie: {
 ```
 
 Then load the font yourself — via `nuxt.config.ts` head links, a CSS `@import`, or however your project manages fonts.
+
+---
+
+## Language / i18n
+
+All UI strings have English defaults and can be overridden via the `labels` option in `nuxt.config.ts`. None of the keys are required — only set the ones you want to change.
+
+```ts
+qookie: {
+  labels: {
+    banner: {
+      message: 'Nous utilisons des cookies pour améliorer votre expérience.',
+      learnMore: 'En savoir plus',
+      acceptAll: 'Tout accepter',
+      rejectAll: 'Tout refuser',
+      manage: 'Gérer',
+    },
+    modal: {
+      title: 'Préférences de cookies',
+      close: 'Fermer',
+      savePreferences: 'Sauvegarder',
+      rejectAll: 'Tout refuser',
+    },
+  },
+}
+```
+
+### Custom banner HTML (`#message` slot)
+
+For full control over banner message markup — rich text, inline links, or a custom privacy notice — use the `#message` slot on `<QookieBanner />`. When the slot is provided, the `labels.banner.message` and `labels.banner.learnMore` options are ignored.
+
+```vue
+<QookieBanner>
+  <template #message>
+    We use cookies to improve your experience.
+    Read our <a href="/privacy-policy">privacy policy</a> and
+    <a href="/cookie-policy">cookie policy</a>.
+  </template>
+</QookieBanner>
+```
 
 ---
 
@@ -328,7 +369,7 @@ interface ConsentRecord {
   id: string            // UUID — unique per decision
   timestamp: string     // ISO 8601
   configHash: string    // hash of your category config at time of consent
-  bannerVersion: string
+  bannerVersion: string  // tracks the installed package version
   preferences: { [categoryKey]: boolean }
 }
 ```
@@ -342,7 +383,7 @@ console.log(record.value)
 //   id: "3f2a1b4c-...",
 //   timestamp: "2025-01-15T10:23:00.000Z",
 //   configHash: "1a2b3c4d",
-//   bannerVersion: "0.1.0",
+//   bannerVersion: "0.2.0",   // matches your installed package version
 //   preferences: { necessary: true, analytics: false, marketing: false }
 // }
 ```
@@ -433,6 +474,7 @@ import type {
   DeclaredCookie,
   ConsentPreferences,
   ConsentRecord,
+  QookieLabels,
 } from 'qookie-nuxt'
 ```
 
@@ -447,6 +489,8 @@ Both components are auto-imported — no manual import needed anywhere.
 ### `<QookieBanner />`
 
 Fixed bottom bar. Shows on first visit, hides after any decision, hides on the privacy policy page. Contains Reject all, Manage, and Accept all buttons. Clicking Manage opens `<QookieModal />`.
+
+Supports a `#message` slot for custom banner copy or markup. See [Language / i18n](#language--i18n).
 
 ### `<QookieModal />`
 
