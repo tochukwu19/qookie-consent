@@ -21,31 +21,46 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. Set up Node.js — matches the engine you develop with locally
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: 'https://registry.npmjs.org'
-
-      # 3. Set up pnpm
+      # 2. pnpm must be set up before Node so setup-node's pnpm cache works
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: latest
+          version: 10
 
-      # 4. Install dependencies from the lockfile — never updates it
+      # 3. Node 22+ is required for npm Trusted Publishing
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
+
+      # 4. Belt-and-suspenders: ensure npm >= 11.5.1 for trusted publishing
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
+      # 5. Fail fast if the git tag doesn't match package.json's version
+      - name: Verify tag matches package.json version
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          TAG_VERSION=${GITHUB_REF_NAME#v}
+          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
+            echo "Tag v$TAG_VERSION does not match package.json version $PKG_VERSION"
+            exit 1
+          fi
+
+      # 6. Install dependencies from the lockfile — never updates it
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # 5. Run the full test suite — publish is blocked if any test fails
+      # 7. Run the full test suite — publish is blocked if any test fails
       - name: Run tests
         run: pnpm test
 
-      # 6. Compile src/ → dist/
+      # 8. Compile src/ → dist/
       - name: Build
         run: pnpm run build
 
-      # 7. Publish via OIDC — no NPM_TOKEN needed
+      # 9. Publish via OIDC — provenance is generated automatically
       - name: Publish to npm
-        run: npm publish --provenance --access public
+        run: npm publish --access public
