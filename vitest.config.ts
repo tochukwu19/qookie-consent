@@ -13,6 +13,8 @@ export default defineConfig({
     },
   },
   test: {
+    // Scope to this package's own tests — each workspace package runs its own suite.
+    include: ['tests/**/*.{test,spec}.ts'],
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./tests/setup.ts'],
