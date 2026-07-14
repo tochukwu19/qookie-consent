@@ -3,6 +3,9 @@
   "version": "0.2.1",
   "description": "GDPR/NDPR cookie consent module for Nuxt 3 and Nuxt 4",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": "./dist/module.mjs"
   },

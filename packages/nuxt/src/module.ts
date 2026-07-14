@@ -2,7 +2,14 @@ import { defineNuxtModule, addPlugin, addComponent, addImports, createResolver }
 import pkg from '../package.json'
 import type { ModuleOptions, RuntimeModuleOptions } from './runtime/types'
 
-export type { ModuleOptions } from './runtime/types'
+export type { ModuleOptions, RuntimeModuleOptions } from './runtime/types'
+export type {
+  CategoryConfig,
+  DeclaredCookie,
+  ConsentPreferences,
+  ConsentRecord,
+  QookieLabels,
+} from '@qookie/core'
 
 const GOOGLE_FONTS_URL =
   'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap'

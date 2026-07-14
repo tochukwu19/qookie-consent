@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Vue 3 components and composable for Qookie cookie consent — works in Astro, Vite+Vue and Nuxt.",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": [
     "**/*.vue",
     "**/*.css"
