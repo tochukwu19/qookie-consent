@@ -2,9 +2,8 @@ node_modules/
 dist/
 .nuxt/
 .output/
-playground/.nuxt/
-playground/.output/
-playground/node_modules/
+playgrounds/*/.nuxt/
+playgrounds/*/.output/
 coverage/
 *.local
 .DS_Store

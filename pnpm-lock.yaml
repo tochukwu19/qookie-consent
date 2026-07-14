@@ -51,7 +51,26 @@ importers:
         specifier: ^3.2.8
         version: 3.2.8(typescript@5.9.3)
 
-  packages/core: {}
+  packages/core:
+    devDependencies:
+      '@types/node':
+        specifier: ^25.6.0
+        version: 25.6.0
+      '@vitest/coverage-v8':
+        specifier: ^3.2.0
+        version: 3.2.4(vitest@3.2.4(@types/node@25.6.0)(jiti@2.6.1)(jsdom@29.1.1)(terser@5.46.2)(yaml@2.8.3))
+      jsdom:
+        specifier: ^29.1.1
+        version: 29.1.1
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+      unbuild:
+        specifier: ^3.0.0
+        version: 3.6.1(typescript@5.9.3)(vue-sfc-transformer@0.1.17(@vue/compiler-core@3.5.33)(esbuild@0.28.0)(vue@3.5.33(typescript@5.9.3)))(vue-tsc@3.2.8(typescript@5.9.3))(vue@3.5.33(typescript@5.9.3))
+      vitest:
+        specifier: ^3.2.0
+        version: 3.2.4(@types/node@25.6.0)(jiti@2.6.1)(jsdom@29.1.1)(terser@5.46.2)(yaml@2.8.3)
 
   packages/vue:
     dependencies:
