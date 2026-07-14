@@ -51,6 +51,17 @@ importers:
         specifier: ^3.2.8
         version: 3.2.8(typescript@5.9.3)
 
+  packages/core: {}
+
+  packages/vue:
+    dependencies:
+      '@qookie/core':
+        specifier: workspace:*
+        version: link:../core
+      vue:
+        specifier: ^3.5.0
+        version: 3.5.33(typescript@5.9.3)
+
 packages:
 
   '@ampproject/remapping@2.3.0':

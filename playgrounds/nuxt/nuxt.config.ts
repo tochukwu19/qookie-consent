@@ -1,7 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  modules: ['../src/module'],
+  modules: ['../../src/module'],
 
   qookie: {
     storageKey: 'qookie:consent',

@@ -12,7 +12,7 @@
   "scripts": {
     "build": "nuxt-module-build build",
     "dev": "nuxt-module-build build --stub && nuxt-module-build prepare",
-    "dev:playground": "nuxi dev playground",
+    "dev:playground": "nuxi dev playgrounds/nuxt",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"

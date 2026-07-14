@@ -1,0 +1,22 @@
+{
+  "name": "@qookie/core",
+  "version": "0.1.0",
+  "description": "Framework-agnostic core for Qookie cookie consent (types, storage, consent record, scanner, store).",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "test": "vitest run"
+  },
+  "license": "MIT"
+}
