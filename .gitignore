@@ -4,6 +4,8 @@ dist/
 .output/
 playgrounds/*/.nuxt/
 playgrounds/*/.output/
+playgrounds/*/.astro/
 coverage/
 *.local
 .DS_Store
+.claude

@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro'
+import ConsentStatus from '../components/ConsentStatus.vue'
+---
+
+<Layout title="Qookie × Astro">
+  <h1>Qookie × Astro</h1>
+  <p>
+    Framework-agnostic GDPR/NDPR cookie consent, running as an Astro island via
+    <code>@qookie/vue</code>. Try Accept / Reject / Manage in the banner below.
+  </p>
+
+  <ConsentStatus client:load />
+
+  <p style="margin-top:2rem"><a href="/privacy-policy">View the privacy policy →</a></p>
+</Layout>

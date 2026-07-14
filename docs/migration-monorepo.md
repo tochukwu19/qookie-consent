@@ -123,6 +123,35 @@ qookie/
 Sequencing note: 1→2→3 gets Astro working (phases 3–4); Nuxt refactor (5) is last so
 the current shipping package keeps working throughout.
 
+## Phase 4 findings (Astro playground, validated in-browser)
+
+`playgrounds/astro` (Astro 5 + `@astrojs/vue`) wires the shared store once in
+`src/qookie.ts` and installs it for every island via the `appEntrypoint`
+(`src/_app.ts` → `app.use(qookie)`). Verified live:
+
+- ✅ Astro builds + SSRs `@qookie/vue`; both pages render.
+- ✅ Banner + a **separate** `ConsentStatus` island both resolve the *same*
+  store — accepting in the banner updates the status island live (cross-island
+  shared state confirmed).
+- ✅ `Accept all` writes a correct `ConsentRecord` (UUID + timestamp +
+  configHash + prefs) to `localStorage`.
+- ✅ Banner auto-hides on `/privacy-policy` via the `window.location.pathname`
+  check. No console errors.
+
+Environment artifacts (not code bugs), noted so they aren't chased later:
+- The headless preview tab runs **backgrounded** (`visibilityState: hidden`), so
+  `requestAnimationFrame` is throttled and Vue's leave-`<Transition>` freezes at
+  `leave-from`. In a visible tab the banner slides out normally.
+- The preview browser **wipes localStorage on navigation**, so the return-visit
+  "no banner" path can't be observed live here — it's covered by the
+  `storage`/hydrate returning-user unit + composable tests, and the write itself
+  was verified.
+
+Known follow-up (Phase 6 build polish): the consumer build emits a Rollup
+circular-chunk warning for the SFC default re-exported through the barrel while
+sharing the `context` module. Runtime execution was verified correct; revisit by
+restructuring the barrel / subpath exports.
+
 ## Decisions (settled 2026-07-14)
 
 - **Package scope**: publish under the `@qookie/*` npm org → `@qookie/core`,
