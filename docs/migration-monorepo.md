@@ -4,6 +4,10 @@ Migration plan to split the current single Nuxt module into a layered set of
 packages so Qookie can run in **Nuxt, Astro/Vue, plain Vite+Vue** (and later
 React/Svelte) from one shared core.
 
+> **Status: complete (all 6 phases).** `@qookie/core` (36 tests), `@qookie/vue`
+> (53), `@qookie/nuxt` (10) all build and pass; validated live in the Nuxt and
+> Astro playgrounds. Release tooling (Changesets + CI) is wired.
+
 ## Goal
 
 ```
@@ -147,10 +151,11 @@ Environment artifacts (not code bugs), noted so they aren't chased later:
   `storage`/hydrate returning-user unit + composable tests, and the write itself
   was verified.
 
-Known follow-up (Phase 6 build polish): the consumer build emits a Rollup
-circular-chunk warning for the SFC default re-exported through the barrel while
-sharing the `context` module. Runtime execution was verified correct; revisit by
-restructuring the barrel / subpath exports.
+~~Known follow-up (Phase 6 build polish): the consumer build emits a Rollup
+circular-chunk warning...~~ **Resolved in Phase 6** by marking the packages
+side-effect-free (`@qookie/core`: `"sideEffects": false`; `@qookie/vue`:
+`["**/*.vue", "**/*.css"]` so scoped styles are preserved). The Astro consumer
+build is now warning-free and styles still ship.
 
 ## Decisions (settled 2026-07-14)
 

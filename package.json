@@ -6,7 +6,13 @@
   "scripts": {
     "build": "pnpm -r --filter \"./packages/*\" build",
     "test": "pnpm -r --filter \"./packages/*\" test",
-    "dev:playground": "pnpm --filter @qookie/nuxt dev:playground"
+    "dev:playground": "pnpm --filter @qookie/nuxt dev:playground",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
