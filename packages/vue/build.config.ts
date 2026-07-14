@@ -8,5 +8,5 @@ export default defineBuildConfig({
   entries: [
     { builder: 'mkdist', input: 'src', outDir: 'dist' },
   ],
-  externals: ['vue', '@qookie/core'],
+  externals: ['vue', '@qookie-consent/core'],
 })

@@ -1,4 +1,4 @@
-import type { ConsentStore } from '@qookie/core'
+import type { ConsentStore } from '@qookie-consent/core'
 import { resolveStore } from './context'
 
 /**

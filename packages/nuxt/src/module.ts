@@ -9,7 +9,7 @@ export type {
   ConsentPreferences,
   ConsentRecord,
   QookieLabels,
-} from '@qookie/core'
+} from '@qookie-consent/core'
 
 const GOOGLE_FONTS_URL =
   'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap'
@@ -85,15 +85,15 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Ensure the framework-agnostic packages (which ship .vue SFCs) are
     // transpiled by Nuxt rather than treated as pre-built externals.
-    nuxt.options.build.transpile.push('@qookie/vue', '@qookie/core')
+    nuxt.options.build.transpile.push('@qookie-consent/vue', '@qookie-consent/core')
 
     // --- Plugin (universal: provides the store on server + client) ---
     addPlugin(resolver.resolve('./runtime/plugins/cookie'))
 
-    // --- Components + composable re-exported from @qookie/vue ---
-    addComponent({ name: 'QookieBanner', filePath: '@qookie/vue', export: 'QookieBanner' })
-    addComponent({ name: 'QookieModal', filePath: '@qookie/vue', export: 'QookieModal' })
+    // --- Components + composable re-exported from @qookie-consent/vue ---
+    addComponent({ name: 'QookieBanner', filePath: '@qookie-consent/vue', export: 'QookieBanner' })
+    addComponent({ name: 'QookieModal', filePath: '@qookie-consent/vue', export: 'QookieModal' })
 
-    addImports({ name: 'useCookieConsent', as: 'useCookieConsent', from: '@qookie/vue' })
+    addImports({ name: 'useCookieConsent', as: 'useCookieConsent', from: '@qookie-consent/vue' })
   },
 })

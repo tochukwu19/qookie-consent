@@ -5,7 +5,7 @@ import {
   type ConsentStoreConfig,
   type Ref,
   type RefFactory,
-} from '@qookie/core'
+} from '@qookie-consent/core'
 
 /** Vue injection key for a per-app consent store (optional override of the singleton). */
 export const QOOKIE_KEY: InjectionKey<ConsentStore> = Symbol('qookie')

@@ -1,5 +1,5 @@
 {
-  "name": "@qookie/playground-astro",
+  "name": "@qookie-consent/playground-astro",
   "type": "module",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@astrojs/vue": "^5.0.0",
-    "@qookie/vue": "workspace:*",
+    "@qookie-consent/vue": "workspace:*",
     "astro": "^5.0.0",
     "vue": "^3.5.33"
   }

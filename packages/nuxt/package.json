@@ -1,5 +1,5 @@
 {
-  "name": "@qookie/nuxt",
+  "name": "@qookie-consent/nuxt",
   "version": "0.2.1",
   "description": "GDPR/NDPR cookie consent module for Nuxt 3 and Nuxt 4",
   "type": "module",
@@ -25,8 +25,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@qookie/core": "workspace:*",
-    "@qookie/vue": "workspace:*"
+    "@qookie-consent/core": "workspace:*",
+    "@qookie-consent/vue": "workspace:*"
   },
   "devDependencies": {
     "@nuxt/kit": "^3.13.0",

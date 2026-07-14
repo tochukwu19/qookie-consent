@@ -1,5 +1,5 @@
 {
-  "name": "@qookie/vue",
+  "name": "@qookie-consent/vue",
   "version": "0.1.0",
   "description": "Vue 3 components and composable for Qookie cookie consent — works in Astro, Vite+Vue and Nuxt.",
   "type": "module",
@@ -31,7 +31,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@qookie/core": "workspace:*"
+    "@qookie-consent/core": "workspace:*"
   },
   "peerDependencies": {
     "vue": "^3.5.0"

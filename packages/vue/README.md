@@ -1,10 +1,10 @@
-# @qookie/vue
+# @qookie-consent/vue
 
 GDPR/NDPR cookie consent for **Astro, Vite + Vue, and any Vue 3 app**. Provides the
 `QookieBanner` / `QookieModal` components, a `useCookieConsent()` composable, and a
-`createQookie()` factory over the framework-agnostic [`@qookie/core`](../core).
+`createQookie()` factory over the framework-agnostic [`@qookie-consent/core`](../core).
 
-> On Nuxt? Use [`@qookie/nuxt`](../nuxt) instead — it wraps this package with
+> On Nuxt? Use [`@qookie-consent/nuxt`](../nuxt) instead — it wraps this package with
 > auto-imports, runtime config and SSR wiring.
 
 - No third-party runtime dependencies (Vue is a peer dependency)
@@ -14,7 +14,7 @@ GDPR/NDPR cookie consent for **Astro, Vite + Vue, and any Vue 3 app**. Provides 
 ## Installation
 
 ```bash
-pnpm add @qookie/vue vue
+pnpm add @qookie-consent/vue vue
 ```
 
 ## Quick start — Vite + Vue (SPA)
@@ -24,7 +24,7 @@ Install the plugin once, then drop the banner into your root component.
 ```ts
 // main.ts
 import { createApp } from 'vue'
-import { createQookie } from '@qookie/vue'
+import { createQookie } from '@qookie-consent/vue'
 import App from './App.vue'
 
 createApp(App)
@@ -35,7 +35,7 @@ createApp(App)
 ```vue
 <!-- App.vue -->
 <script setup lang="ts">
-import { QookieBanner } from '@qookie/vue'
+import { QookieBanner } from '@qookie-consent/vue'
 </script>
 
 <template>
@@ -63,7 +63,7 @@ export default defineConfig({
 
 ```ts
 // src/qookie.ts — create the store once (module singleton)
-import { createQookie } from '@qookie/vue'
+import { createQookie } from '@qookie-consent/vue'
 
 export const qookie = createQookie({
   privacyPolicyPath: '/privacy-policy',
@@ -85,7 +85,7 @@ export default (app: App) => {
 ```astro
 ---
 // src/layouts/Layout.astro
-import { QookieBanner } from '@qookie/vue'
+import { QookieBanner } from '@qookie-consent/vue'
 ---
 <html>
   <body>
@@ -161,7 +161,7 @@ stylesheet:
 }
 ```
 
-Unlike `@qookie/nuxt`, this package does **not** auto-load a font — set
+Unlike `@qookie-consent/nuxt`, this package does **not** auto-load a font — set
 `--qookie-font` and load the font yourself.
 
 ## License

@@ -3,7 +3,7 @@ import { mount, flushPromises } from '@vue/test-utils'
 import { createQookie, defaultCategories } from '../src/createQookie'
 import { _resetStore } from '../src/context'
 import type { QookieOptions } from '../src/createQookie'
-import type { ConsentStore } from '@qookie/core'
+import type { ConsentStore } from '@qookie-consent/core'
 import QookieModal from '../src/components/QookieModal.vue'
 
 function setupStore(opts: QookieOptions = {}): ConsentStore {

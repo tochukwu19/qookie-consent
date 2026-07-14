@@ -90,11 +90,11 @@ describe('font head injection', () => {
   })
 })
 
-describe('registration wires to @qookie/vue', () => {
+describe('registration wires to @qookie-consent/vue', () => {
   it('transpiles the framework-agnostic packages', () => {
     const nuxt = runSetup()
-    expect(nuxt.options.build.transpile).toContain('@qookie/vue')
-    expect(nuxt.options.build.transpile).toContain('@qookie/core')
+    expect(nuxt.options.build.transpile).toContain('@qookie-consent/vue')
+    expect(nuxt.options.build.transpile).toContain('@qookie-consent/core')
   })
 
   it('registers the universal plugin', () => {
@@ -103,21 +103,21 @@ describe('registration wires to @qookie/vue', () => {
     expect(addPlugin.mock.calls[0][0]).toContain('runtime/plugins/cookie')
   })
 
-  it('registers the components from @qookie/vue', () => {
+  it('registers the components from @qookie-consent/vue', () => {
     runSetup()
     const names = addComponent.mock.calls.map(c => c[0])
     expect(names).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ name: 'QookieBanner', filePath: '@qookie/vue', export: 'QookieBanner' }),
-        expect.objectContaining({ name: 'QookieModal', filePath: '@qookie/vue', export: 'QookieModal' }),
+        expect.objectContaining({ name: 'QookieBanner', filePath: '@qookie-consent/vue', export: 'QookieBanner' }),
+        expect.objectContaining({ name: 'QookieModal', filePath: '@qookie-consent/vue', export: 'QookieModal' }),
       ]),
     )
   })
 
-  it('auto-imports useCookieConsent from @qookie/vue', () => {
+  it('auto-imports useCookieConsent from @qookie-consent/vue', () => {
     runSetup()
     expect(addImports).toHaveBeenCalledWith(
-      expect.objectContaining({ name: 'useCookieConsent', from: '@qookie/vue' }),
+      expect.objectContaining({ name: 'useCookieConsent', from: '@qookie-consent/vue' }),
     )
   })
 })

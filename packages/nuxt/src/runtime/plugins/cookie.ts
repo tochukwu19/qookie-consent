@@ -1,7 +1,7 @@
 import { defineNuxtPlugin, useRuntimeConfig } from '#app'
 import { ref } from 'vue'
-import { createConsentStore } from '@qookie/core'
-import { QOOKIE_KEY, bootstrapStore } from '@qookie/vue'
+import { createConsentStore } from '@qookie-consent/core'
+import { QOOKIE_KEY, bootstrapStore } from '@qookie-consent/vue'
 import type { RuntimeModuleOptions } from '../types'
 
 // Universal plugin: the store must be provided during SSR (components render

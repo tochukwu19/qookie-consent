@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { useCookieConsent } from '@qookie/vue'
+import { useCookieConsent } from '@qookie-consent/vue'
 
 const store = useCookieConsent()
 const { decided, categories, isEnabled } = store

@@ -1,4 +1,4 @@
-import { createQookie } from '@qookie/vue'
+import { createQookie } from '@qookie-consent/vue'
 
 // Created once (ES module singleton) and shared across every island via _app.ts.
 // autoBootstrap is off — <QookieBanner> runs hydrate + scanner on mount, which

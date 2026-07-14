@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils'
 import { createQookie, defaultCategories } from '../src/createQookie'
 import { _resetStore } from '../src/context'
 import type { QookieOptions } from '../src/createQookie'
-import type { ConsentStore } from '@qookie/core'
+import type { ConsentStore } from '@qookie-consent/core'
 import QookieBanner from '../src/components/QookieBanner.vue'
 
 const modalStub = { template: '<div data-testid="modal-stub" />' }

@@ -12,7 +12,7 @@ import { runScanner } from './scanner'
 
 /**
  * Minimal reactive-ref contract. Structurally compatible with Vue's `ref`,
- * so `@qookie/vue` can pass Vue's `ref` directly while core stays dep-free.
+ * so `@qookie-consent/vue` can pass Vue's `ref` directly while core stays dep-free.
  */
 export interface Ref<T> {
   value: T

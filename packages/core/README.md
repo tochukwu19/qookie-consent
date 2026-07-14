@@ -1,4 +1,4 @@
-# @qookie/core
+# @qookie-consent/core
 
 The framework-agnostic core of [Qookie](../../README.md) — types, `localStorage`
 persistence, the proof-of-consent record, legacy migration, the cookie scanner,
@@ -6,16 +6,16 @@ and a reactive-agnostic consent **store factory**. No framework, no dependencies
 
 Most people don't install this directly:
 
-- **Nuxt** → [`@qookie/nuxt`](../nuxt)
-- **Astro / Vite + Vue / Vue 3** → [`@qookie/vue`](../vue)
+- **Nuxt** → [`@qookie-consent/nuxt`](../nuxt)
+- **Astro / Vite + Vue / Vue 3** → [`@qookie-consent/vue`](../vue)
 
-Reach for `@qookie/core` when you're building an adapter for another framework
+Reach for `@qookie-consent/core` when you're building an adapter for another framework
 (React, Svelte, Solid, vanilla) or wiring the store into custom state management.
 
 ## Installation
 
 ```bash
-pnpm add @qookie/core
+pnpm add @qookie-consent/core
 ```
 
 ## The store factory
@@ -26,7 +26,7 @@ is structurally compatible with Vue's `ref`, Vue `reactive` wrappers, or a tiny
 shim for another framework.
 
 ```ts
-import { createConsentStore } from '@qookie/core'
+import { createConsentStore } from '@qookie-consent/core'
 import { ref } from 'vue' // or any compatible ref factory
 
 const store = createConsentStore(

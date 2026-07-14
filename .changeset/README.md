@@ -8,7 +8,7 @@ To record a change for the next release, run:
 pnpm changeset
 ```
 
-Pick the affected packages (`@qookie/core`, `@qookie/vue`, `@qookie/nuxt`) and the
+Pick the affected packages (`@qookie-consent/core`, `@qookie-consent/vue`, `@qookie-consent/nuxt`) and the
 bump type (patch / minor / major), and write a short summary. The generated
 markdown file should be committed alongside your change.
 

@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import type { ConsentPreferences, QookieLabels } from '@qookie/core'
+import type { ConsentPreferences, QookieLabels } from '@qookie-consent/core'
 import { useCookieConsent } from '../useCookieConsent'
 
 defineEmits<{ close: [] }>()

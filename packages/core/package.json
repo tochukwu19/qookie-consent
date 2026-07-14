@@ -1,5 +1,5 @@
 {
-  "name": "@qookie/core",
+  "name": "@qookie-consent/core",
   "version": "0.1.0",
   "description": "Framework-agnostic core for Qookie cookie consent (types, storage, consent record, scanner, store).",
   "type": "module",

@@ -1,8 +1,8 @@
-# @qookie/nuxt
+# @qookie-consent/nuxt
 
 GDPR and NDPR cookie consent for Nuxt 3 and Nuxt 4. Drop-in banner and preference modal, fully themeable, no third-party runtime dependencies.
 
-> Not on Nuxt? The same banner, modal and store work in Astro, Vite + Vue and any Vue 3 app via [`@qookie/vue`](../vue).
+> Not on Nuxt? The same banner, modal and store work in Astro, Vite + Vue and any Vue 3 app via [`@qookie-consent/vue`](../vue).
 
 - SSR-safe — the store is provided during SSR; consent hydrates from localStorage after mount, so there's no hydration mismatch
 - Proof of consent — every decision is recorded with a UUID, timestamp, and config hash
@@ -42,16 +42,16 @@ This is intentional. Cookie consent tools that intercept scripts automatically t
 ## Installation
 
 ```bash
-npm install @qookie/nuxt
+npm install @qookie-consent/nuxt
 # or
-pnpm add @qookie/nuxt
+pnpm add @qookie-consent/nuxt
 ```
 
 Register the module in `nuxt.config.ts`:
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['@qookie/nuxt'],
+  modules: ['@qookie-consent/nuxt'],
 })
 ```
 
@@ -79,7 +79,7 @@ This is what a real integration looks like: install, configure categories, style
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['@qookie/nuxt'],
+  modules: ['@qookie-consent/nuxt'],
 
   qookie: {
     privacyPolicyPath: '/privacy-policy',
@@ -477,7 +477,7 @@ import type {
   ConsentPreferences,
   ConsentRecord,
   QookieLabels,
-} from '@qookie/nuxt'
+} from '@qookie-consent/nuxt'
 ```
 
 The `qookie` key in `nuxt.config.ts` is fully typed — your IDE will autocomplete all options and flag unknown keys.

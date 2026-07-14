@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { createQookie } from '../src/createQookie'
 import { useCookieConsent } from '../src/useCookieConsent'
 import { _resetStore } from '../src/context'
-import { hashConfig, type CategoryConfig, type StoredConsent } from '@qookie/core'
+import { hashConfig, type CategoryConfig, type StoredConsent } from '@qookie-consent/core'
 
 const testCategories: CategoryConfig[] = [
   { key: 'necessary', label: 'Necessary', description: 'Required cookies', required: true },

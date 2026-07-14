@@ -35,10 +35,10 @@ importers:
 
   packages/nuxt:
     dependencies:
-      '@qookie/core':
+      '@qookie-consent/core':
         specifier: workspace:*
         version: link:../core
-      '@qookie/vue':
+      '@qookie-consent/vue':
         specifier: workspace:*
         version: link:../vue
     devDependencies:
@@ -75,7 +75,7 @@ importers:
 
   packages/vue:
     dependencies:
-      '@qookie/core':
+      '@qookie-consent/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -115,7 +115,7 @@ importers:
       '@astrojs/vue':
         specifier: ^5.0.0
         version: 5.1.4(@types/node@25.6.0)(astro@5.18.2(@types/node@25.6.0)(db0@0.3.4)(ioredis@5.10.1)(jiti@2.6.1)(rollup@4.60.2)(terser@5.46.2)(typescript@5.9.3)(yaml@2.8.3))(jiti@2.6.1)(rollup@4.60.2)(terser@5.46.2)(vue@3.5.33(typescript@5.9.3))(yaml@2.8.3)
-      '@qookie/vue':
+      '@qookie-consent/vue':
         specifier: workspace:*
         version: link:../../packages/vue
       astro:
@@ -127,7 +127,7 @@ importers:
 
   playgrounds/nuxt:
     dependencies:
-      '@qookie/nuxt':
+      '@qookie-consent/nuxt':
         specifier: workspace:*
         version: link:../../packages/nuxt
       nuxt:

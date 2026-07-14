@@ -1,7 +1,7 @@
-// @qookie/vue — Vue 3 layer for Qookie cookie consent.
+// @qookie-consent/vue — Vue 3 layer for Qookie cookie consent.
 
 // Re-export core types + utilities so consumers need a single import.
-export * from '@qookie/core'
+export * from '@qookie-consent/core'
 
 export { createQookie, resolveConfig, defaultCategories } from './createQookie'
 export type { QookieOptions, Qookie } from './createQookie'

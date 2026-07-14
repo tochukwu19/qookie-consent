@@ -1,6 +1,6 @@
-import type { CategoryConfig, DeclaredCookie, QookieLabels } from '@qookie/core'
+import type { CategoryConfig, DeclaredCookie, QookieLabels } from '@qookie-consent/core'
 
-export type { CategoryConfig, DeclaredCookie, QookieLabels } from '@qookie/core'
+export type { CategoryConfig, DeclaredCookie, QookieLabels } from '@qookie-consent/core'
 
 export interface ModuleOptions {
   storageKey?: string

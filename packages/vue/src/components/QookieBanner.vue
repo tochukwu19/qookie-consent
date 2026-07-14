@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onBeforeUnmount, ref } from 'vue'
-import type { QookieLabels } from '@qookie/core'
+import type { QookieLabels } from '@qookie-consent/core'
 import { useCookieConsent } from '../useCookieConsent'
 import { bootstrapStore } from '../context'
 import QookieModal from './QookieModal.vue'

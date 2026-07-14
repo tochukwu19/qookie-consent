@@ -5,7 +5,7 @@ import type {
   ConsentStoreConfig,
   DeclaredCookie,
   QookieLabels,
-} from '@qookie/core'
+} from '@qookie-consent/core'
 import { bootstrapStore, createStore, QOOKIE_KEY } from './context'
 
 /** Default GDPR/NDPR category set, mirrored from the Nuxt module defaults. */

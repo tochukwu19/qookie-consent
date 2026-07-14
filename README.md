@@ -11,19 +11,19 @@ Nuxt, Astro, Vite + Vue, or any Vue 3 app.
 
 | Package | Install for | |
 |---|---|---|
-| [`@qookie/nuxt`](packages/nuxt) | **Nuxt 3 / 4** — zero-config module, auto-imports, SSR | [README](packages/nuxt/README.md) |
-| [`@qookie/vue`](packages/vue) | **Astro, Vite + Vue, any Vue 3 app** | [README](packages/vue/README.md) |
-| [`@qookie/core`](packages/core) | **Framework-agnostic core** — build your own adapter | [README](packages/core/README.md) |
+| [`@qookie-consent/nuxt`](packages/nuxt) | **Nuxt 3 / 4** — zero-config module, auto-imports, SSR | [README](packages/nuxt/README.md) |
+| [`@qookie-consent/vue`](packages/vue) | **Astro, Vite + Vue, any Vue 3 app** | [README](packages/vue/README.md) |
+| [`@qookie-consent/core`](packages/core) | **Framework-agnostic core** — build your own adapter | [README](packages/core/README.md) |
 
-`@qookie/nuxt` is a thin wrapper over `@qookie/vue`, which is a Vue layer over
-`@qookie/core`. Pick the highest-level package that matches your framework.
+`@qookie-consent/nuxt` is a thin wrapper over `@qookie-consent/vue`, which is a Vue layer over
+`@qookie-consent/core`. Pick the highest-level package that matches your framework.
 
 ## Which one do I install?
 
-- **Nuxt** → `@qookie/nuxt`
-- **Astro (with `@astrojs/vue`)** → `@qookie/vue`
-- **Vite + Vue / plain Vue 3 SPA** → `@qookie/vue`
-- **React / Svelte / vanilla** → `@qookie/core` (bring your own UI; a Vue-free
+- **Nuxt** → `@qookie-consent/nuxt`
+- **Astro (with `@astrojs/vue`)** → `@qookie-consent/vue`
+- **Vite + Vue / plain Vue 3 SPA** → `@qookie-consent/vue`
+- **React / Svelte / vanilla** → `@qookie-consent/core` (bring your own UI; a Vue-free
   reference is the store factory in core)
 
 ## What Qookie gives you
@@ -55,9 +55,9 @@ if (isEnabled('analytics')) loadGoogleAnalytics()
 
 ```
 packages/
-  core/         @qookie/core   — types, storage, record, migrate, scanner, store
-  vue/          @qookie/vue    — createQookie, useCookieConsent, QookieBanner/Modal
-  nuxt/         @qookie/nuxt   — Nuxt module wrapping @qookie/vue
+  core/         @qookie-consent/core   — types, storage, record, migrate, scanner, store
+  vue/          @qookie-consent/vue    — createQookie, useCookieConsent, QookieBanner/Modal
+  nuxt/         @qookie-consent/nuxt   — Nuxt module wrapping @qookie-consent/vue
 playgrounds/
   nuxt/         Nuxt demo app
   astro/        Astro + @astrojs/vue demo app
