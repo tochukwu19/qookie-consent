@@ -1,45 +1,24 @@
 {
-  "name": "qookie-nuxt",
-  "version": "0.2.1",
-  "description": "GDPR/NDPR cookie consent module for Nuxt 3",
+  "name": "qookie-monorepo",
+  "version": "0.0.0",
+  "private": true,
   "type": "module",
-  "exports": {
-    ".": "./dist/module.mjs"
-  },
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "build": "nuxt-module-build build",
-    "dev": "nuxt-module-build build --stub && nuxt-module-build prepare",
-    "dev:playground": "nuxi dev playground",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "build": "pnpm -r --filter \"./packages/*\" build",
+    "test": "pnpm -r --filter \"./packages/*\" test",
+    "dev:playground": "pnpm --filter @qookie-consent/nuxt dev:playground",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build && pnpm -r --filter \"./packages/*\" publish --access public --no-git-checks"
   },
   "devDependencies": {
-    "@nuxt/kit": "^3.13.0",
-    "@nuxt/module-builder": "1.0.2",
-    "@nuxt/schema": "^3.13.0",
-    "@nuxt/test-utils": "^3.14.0",
-    "@types/node": "^25.6.0",
-    "@vitejs/plugin-vue": "^6.0.0",
-    "@vitest/coverage-v8": "^3.2.0",
-    "@vue/test-utils": "^2.4.0",
-    "jsdom": "^29.1.1",
-    "nuxt": "^3.13.0",
-    "typescript": "^5.6.0",
-    "vitest": "^3.2.0",
-    "vue": "^3.5.33",
-    "vue-tsc": "^3.2.8"
-  },
-  "peerDependencies": {
-    "nuxt": "^3.0.0 || ^4.0.0"
+    "@changesets/cli": "^2.27.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild",
-      "@parcel/watcher"
+      "@parcel/watcher",
+      "sharp"
     ]
   }
 }

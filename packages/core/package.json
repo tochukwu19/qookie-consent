@@ -1,0 +1,39 @@
+{
+  "name": "@qookie-consent/core",
+  "version": "0.1.0",
+  "description": "Framework-agnostic core for Qookie cookie consent (types, storage, consent record, scanner, store).",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tochukwu19/qookie-nuxt.git",
+    "directory": "packages/core"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "@vitest/coverage-v8": "^3.2.0",
+    "jsdom": "^29.1.1",
+    "typescript": "^5.6.0",
+    "unbuild": "^3.0.0",
+    "vitest": "^3.2.0"
+  },
+  "license": "MIT"
+}
