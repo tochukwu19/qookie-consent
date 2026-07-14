@@ -76,26 +76,17 @@ export default defineNuxtModule<ModuleOptions>({
       moduleVersion: pkg.version,
     } as RuntimeModuleOptions
 
-    // --- Plugin, components, composable ---
-    addPlugin({
-      src: resolver.resolve('./runtime/plugins/cookie.client'),
-      mode: 'client',
-    })
+    // Ensure the framework-agnostic packages (which ship .vue SFCs) are
+    // transpiled by Nuxt rather than treated as pre-built externals.
+    nuxt.options.build.transpile.push('@qookie/vue', '@qookie/core')
 
-    addComponent({
-      name: 'QookieBanner',
-      filePath: resolver.resolve('./runtime/components/QookieBanner.vue'),
-    })
+    // --- Plugin (universal: provides the store on server + client) ---
+    addPlugin(resolver.resolve('./runtime/plugins/cookie'))
 
-    addComponent({
-      name: 'QookieModal',
-      filePath: resolver.resolve('./runtime/components/QookieModal.vue'),
-    })
+    // --- Components + composable re-exported from @qookie/vue ---
+    addComponent({ name: 'QookieBanner', filePath: '@qookie/vue', export: 'QookieBanner' })
+    addComponent({ name: 'QookieModal', filePath: '@qookie/vue', export: 'QookieModal' })
 
-    addImports({
-      name: 'useCookieConsent',
-      as: 'useCookieConsent',
-      from: resolver.resolve('./runtime/composables/useCookieConsent'),
-    })
+    addImports({ name: 'useCookieConsent', as: 'useCookieConsent', from: '@qookie/vue' })
   },
 })
