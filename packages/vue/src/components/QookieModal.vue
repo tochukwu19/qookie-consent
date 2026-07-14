@@ -52,14 +52,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 import type { ConsentPreferences, QookieLabels } from '@qookie-consent/core'
 import { useCookieConsent } from '../useCookieConsent'
 
 defineEmits<{ close: [] }>()
 
 const store = useCookieConsent()
-const { preferences, categories, saveConsent, rejectAll } = store
+const { categories, saveConsent, rejectAll } = store
+// The store's refs are real Vue refs at runtime; core types them structurally
+// (`{ value: T }`), so cast to Vue's Ref for correct watch/unwrap typing.
+const preferences = store.preferences as Ref<ConsentPreferences>
 const modalLabels = ((store.config.labels as QookieLabels)?.modal) ?? {}
 
 const draft = ref<ConsentPreferences>({ ...preferences.value })

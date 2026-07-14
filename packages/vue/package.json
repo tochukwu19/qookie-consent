@@ -1,6 +1,6 @@
 {
   "name": "@qookie-consent/vue",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vue 3 components and composable for Qookie cookie consent — works in Astro, Vite+Vue and Nuxt.",
   "type": "module",
   "repository": {
@@ -11,10 +11,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "sideEffects": [
-    "**/*.vue",
-    "**/*.css"
-  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -27,7 +23,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "unbuild",
+    "build": "vite build",
     "test": "vitest run"
   },
   "dependencies": {
@@ -43,7 +39,9 @@
     "@vue/test-utils": "^2.4.0",
     "jsdom": "^29.1.1",
     "typescript": "^5.6.0",
-    "unbuild": "^3.0.0",
+    "vite": "^7.0.0",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.2.0",
     "vue": "^3.5.33",
     "vue-tsc": "^3.2.8"

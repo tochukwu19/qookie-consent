@@ -135,6 +135,42 @@ Gate your own code on it:
 if (useCookieConsent().isEnabled('analytics')) loadAnalytics()
 ```
 
+### Composable in an Astro island
+
+You don't need `<QookieBanner>` to use the composable — any Vue island resolves
+the same shared store (as long as `createQookie` is installed via the
+`appEntrypoint`, per the Astro setup above). Example: a "cookie settings" island
+that reads live state and reopens the modal.
+
+```vue
+<!-- src/components/CookieSettings.vue -->
+<template>
+  <div>
+    <p>Analytics: {{ isEnabled('analytics') ? 'enabled' : 'disabled' }}</p>
+    <button @click="openModal">Manage cookie preferences</button>
+    <button v-if="!decided" @click="acceptAll">Accept all</button>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useCookieConsent } from '@qookie-consent/vue'
+
+const { decided, isEnabled, openModal, acceptAll } = useCookieConsent()
+</script>
+```
+
+```astro
+---
+// any .astro page/layout
+import CookieSettings from '../components/CookieSettings.vue'
+---
+<CookieSettings client:load />
+```
+
+State stays in sync across islands: accepting here updates `<QookieBanner>` (and
+vice-versa) because they share one store. `decided`, `preferences`, etc. are Vue
+refs — use them directly in templates; add `.value` in plain `<script>`/`.ts`.
+
 ## Components
 
 - **`<QookieBanner>`** — fixed bottom bar with equal-weight Reject / Manage / Accept.
